@@ -22,26 +22,31 @@ window.addEventListener("load", () => {
         })
         .then((data) => {
           console.log(data);
-          const { temp_f } = data.current;
+          const { temp_f, temp_c } = data.current;
           const { text, icon } = data.current.condition;
           const { country, localtime, name, tz_id } = data.location;
+
           //set DOM Elements from the API
           temperatureDegree.textContent = temp_f;
+          let celsius = temp_c;
           temperatureDesc.textContent = text;
           locationTimezone.textContent = tz_id;
+
           wIcon.innerHTML = icon;
-          //   wIcon.HTMLImageElement.crossOrigin = { icon };
-          //   //set Icon
-          //   setIcons(icon, document.querySelector(".icon"));
+
+          //Formula for Celsius // let celsius = (temp_f - 32) * (5 / 9);
+
+          //Change temperature tp Celsius/Farenheit
+          temperatureSection.addEventListener("click", () => {
+            if (temperatureSpan.textContent === "F") {
+              temperatureSpan.textContent = "C";
+              temperatureDegree.textContent = celsius;
+            } else {
+              temperatureSpan.textContent = "F";
+              temperatureDegree.textContent = temp_f;
+            }
+          });
         });
-      //Change temperature to Celsius/Farenheit
-      temperatureSection.addEventListener("click", () => {
-        if (temperatureSpan.textContent === "F") {
-          temperatureSpan.textContent = "C";
-        } else {
-          temperatureSpan.textContent = "F";
-        }
-      });
     });
   } else {
     h1.textContent = "IT DOESNT WORK";
